@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>ListController</servlet-name>
+        <servlet-class>com.distributed.hoteljpa.controller.ListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateController</servlet-name>
+        <servlet-class>com.distributed.hoteljpa.controller.CreateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WizardController</servlet-name>
+        <servlet-class>com.distributed.hoteljpa.controller.WizardController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListController</servlet-name>
+        <url-pattern>/List</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateController</servlet-name>
+        <url-pattern>/Create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WizardController</servlet-name>
+        <url-pattern>/Wizard</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
