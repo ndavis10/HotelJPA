@@ -28,7 +28,7 @@ public class DeleteController extends HttpServlet {
     private HotelsFacade service;
 
     private static final String CONFIRM_PATH = "/View/confirm.jsp";
-    private static final String COMPLETE_PATH = "/List";
+    private static final String COMPLETE_PATH = "List";
     private static final String ERROR_PATH = "/error.jsp";
     private static final String DAO_PARAM = "HotelDao";
 

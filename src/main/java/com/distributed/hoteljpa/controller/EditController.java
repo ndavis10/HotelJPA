@@ -27,7 +27,7 @@ public class EditController extends HttpServlet {
     @EJB
     private HotelsFacade service;
     private static final String EDIT_PATH = "/View/edit.jsp";
-    private static final String COMPLETE_PATH = "/List";
+    private static final String COMPLETE_PATH = "List";
     private static final String ERROR_PATH = "/error.jsp";
     private static final String DAO_PARAM = "HotelDao";
     /**

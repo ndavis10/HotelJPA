@@ -47,7 +47,29 @@ public class ListController extends HttpServlet {
         String destination = "";
         try{
             //HotelDaoStrategy hotelDAO = (HotelDaoStrategy)Class.forName(request.getServletContext().getInitParameter(DAO_PARAM)).newInstance();
-            List<Hotels> hotelList = service.findAll();
+            int search = 0;
+            try{
+                //special handling because primitive types and nulls
+                search = Integer.parseInt((String)request.getAttribute("search"));
+            }
+            catch(Exception e)
+            {
+                //does nothing
+            }    
+            String searchParam = (String)request.getAttribute("searchParam");
+            List<Hotels> hotelList = new ArrayList<>();
+            switch(search)
+            {
+                case CITY_SEARCH:
+                    hotelList = service.findByCity(searchParam);
+                    break;
+                case STATE_SEARCH:
+                    hotelList = service.findByState(searchParam);
+                    break;
+                default:
+                    hotelList = service.findAll();
+                    break;
+            }
             
             destination = RESULTS_PAGE;
             
@@ -90,37 +112,7 @@ public class ListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String destination = "";
-        try{
-            //HotelDaoStrategy hotelDAO = (HotelDaoStrategy)Class.forName(request.getServletContext().getInitParameter(DAO_PARAM)).newInstance();
-            List<Hotels> hotelList = new ArrayList<>();
-            switch(Integer.parseInt(request.getAttribute("search").toString()))
-            {
-                case ALL_HOTELS:
-                    hotelList = service.findAll();
-                    break;
-                case STATE_SEARCH:
-                    hotelList = service.findByState(request.getAttribute("state").toString());
-                    break;
-                case CITY_SEARCH:
-                    hotelList = service.findByCity(request.getAttribute("city").toString());
-                    break;
-            }
-            
-            destination = RESULTS_PAGE;
-            
-            request.setAttribute("list", hotelList);
-        }
-        catch(Exception e)
-        {
-            //Update this with actual useful exception-handling
-            destination = ERROR_PAGE;
-            request.setAttribute("msg", e.getMessage());
-        }
-        
-        RequestDispatcher view = request.getRequestDispatcher(destination);
-        view.forward(request, response);
+        processRequest(request, response);
     }
 
     /**

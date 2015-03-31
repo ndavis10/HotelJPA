@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="<%= request.getContextPath() %>/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css"/>
         <title>Confirm Deletion</title>
     </head>
     <body>
@@ -40,6 +40,6 @@
         </div>
             
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-        <script src="<%= request.getContextPath() %>/js/materialize.min.js" type="text/javascript"></script>
+        <script src="js/materialize.min.js" type="text/javascript"></script>
     </body>
 </html>

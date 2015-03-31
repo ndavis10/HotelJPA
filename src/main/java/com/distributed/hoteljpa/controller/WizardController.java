@@ -85,10 +85,12 @@ public class WizardController extends HttpServlet {
                 case ALL_HOTELS:
                     break;
                 case STATE_SEARCH:
-                    request.setAttribute("state", request.getParameter("state"));
+                    request.setAttribute("searchParam", request.getParameter("state"));
                     break;
                 case CITY_SEARCH:
-                    request.setAttribute("city", request.getParameter("city"));
+                    request.setAttribute("searchParam", request.getParameter("city"));
+                    break;
+                default:
                     break;
             }
             request.setAttribute("search", request.getParameter(SEARCH_PARAM));
