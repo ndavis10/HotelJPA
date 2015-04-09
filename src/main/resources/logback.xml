@@ -14,9 +14,10 @@ and open the template in the editor.
 
     <!-- child level logging for application -->
     <logger name="com.distributed" level="DEBUG" />
+    <logger name="org.springframework" level="DEBUG" />
 
     <!-- root level logging (children can override) -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

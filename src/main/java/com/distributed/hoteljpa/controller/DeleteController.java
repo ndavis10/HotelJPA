@@ -22,15 +22,13 @@ import static org.eclipse.persistence.logging.SessionLog.EJB;
  *
  * @author viewt_000
  */
-@WebServlet(name = "DeleteController", urlPatterns = {"/Delete"})
 public class DeleteController extends HttpServlet {
     @EJB
     private HotelsFacade service;
 
-    private static final String CONFIRM_PATH = "/View/confirm.jsp";
+    private static final String CONFIRM_PATH = "/admin/confirm.jsp";
     private static final String COMPLETE_PATH = "List";
     private static final String ERROR_PATH = "/error.jsp";
-    private static final String DAO_PARAM = "HotelDao";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

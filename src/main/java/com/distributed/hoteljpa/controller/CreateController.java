@@ -26,10 +26,9 @@ public class CreateController extends HttpServlet {
     @EJB
     private HotelsFacade service;
     
-    private static final String CREATE_PATH = "/View/create.html";
+    private static final String CREATE_PATH = "/member/create.html";
     private static final String COMPLETE_PATH = "/List";
     private static final String ERROR_PATH = "/error.jsp";
-    private static final String DAO_PARAM = "HotelDao";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

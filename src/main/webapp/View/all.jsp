@@ -19,7 +19,7 @@
         <div class="container">
             <h1>All Hotels</h1>
             <div class="row">
-                <a href="Create">Create New</a>
+                <a href="member/Create">Create New</a>
             </div>
             <table class="striped responsive-table">
                 <tr>
@@ -39,7 +39,7 @@
                         <td>${hotel.stateName}</td>
                         <td>${hotel.postalCode}</td>
                         <td>${hotel.notes}</td>
-                        <td><a href="Edit?id=${hotel.hotelId}">Edit</a> | <a href="Delete?id=${hotel.hotelId}">Delete</a></td>
+                        <td><a href="admin/Edit?id=${hotel.hotelId}">Edit</a> | <a href="admin/Delete?id=${hotel.hotelId}">Delete</a></td>
                     </tr>
                 </c:forEach>
             </table>
