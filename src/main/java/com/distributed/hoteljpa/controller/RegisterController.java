@@ -5,32 +5,37 @@
  */
 package com.distributed.hoteljpa.controller;
 
-import com.distributed.hoteljpa.ejb.HotelsFacade;
+import com.distributed.hoteljpa.ejb.*;
 import com.distributed.hoteljpa.entity.*;
+import com.distributed.hoteljpa.util.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.*;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static org.eclipse.persistence.logging.SessionLog.EJB;
+import org.springframework.mail.MailException;
 
 /**
  *
  * @author viewt_000
  */
-public class DeleteController extends HttpServlet {
+public class RegisterController extends HttpServlet {
+
     @Inject
-    private HotelsFacade service;
-
-    private static final String CONFIRM_PATH = "/confirm.jsp";
-    private static final String COMPLETE_PATH = "List";
-    private static final String ERROR_PATH = "../error.jsp";
-
+    private UsersFacade userService;
+    @Inject
+    private AuthoritiesFacade authorityService;
+    
+    private final EmailVerificationSender emailService = new EmailVerificationSender();
+    
+    private static final String LOGIN_PATH = "/login.jsp";
+    private static final String SUCCESS_PATH = "/registered.html";
+    private static final String ERROR_PATH = "/error.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,10 +53,10 @@ public class DeleteController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteController</title>");            
+            out.println("<title>Servlet RegisterController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegisterController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,26 +74,7 @@ public class DeleteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String destination = CONFIRM_PATH;
-        
-        try
-        {
-            //HotelDaoStrategy hotelDAO = (HotelDaoStrategy)Class.forName(request.getServletContext().getInitParameter(DAO_PARAM)).newInstance();
-            
-            int id = Integer.parseInt(request.getParameter("id"));
-            
-            Hotels hotel = service.find(id);
-            
-            request.setAttribute("hotel", hotel);
-        }
-        catch(Exception e)
-        {
-            destination = ERROR_PATH;
-            request.setAttribute("msg", e.getMessage());
-        }
-        
-        RequestDispatcher view = request.getRequestDispatcher(response.encodeRedirectURL(destination));
+        RequestDispatcher view = request.getRequestDispatcher(LOGIN_PATH);
         view.forward(request, response);
     }
 
@@ -103,25 +89,51 @@ public class DeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String destination = SUCCESS_PATH;
         
-        String destination = COMPLETE_PATH;
-        
-        try
-        {
-            //HotelDaoStrategy hotelDAO = (HotelDaoStrategy)Class.forName(request.getServletContext().getInitParameter(DAO_PARAM)).newInstance();
+        try{
+            Users insertUser = new Users();
+            String username = request.getParameter("r_username");
+            insertUser.setUsername(username);
+            String password = ShaHashGeneratorApp.sha512(request.getParameter("r_password"), username);
+            String confirm = ShaHashGeneratorApp.sha512(request.getParameter("r_confirm_password"), username);
+            if(!password.equals(confirm))
+            {
+                throw new IllegalArgumentException("Passwords do not match!");
+            }
+            insertUser.setPassword(password);
+            insertUser.setEnabled(false);
+	       
+            List<Authorities> auths = new ArrayList<Authorities>();
+            Authorities auth = new Authorities();
+            auth.setAuthority("ROLE_MEMBER"); // or, use any role you want
+            auths.add(auth);
+            insertUser.setAuthoritiesCollection(auths);
+            auth.setUsername(insertUser);
+
+            userService.create(insertUser); // you need a UserService (UserFacade)
             
-            int id = Integer.parseInt(request.getParameter("id"));
+            try {
+                // you need an email service class
+                emailService.sendEmail(insertUser.getUsername(), null); 
+
+            } catch (MailException ex) {
+                 throw new RuntimeException("Sorry, the verification email could not be "
+                                + "sent. Please notify the webmaster at "
+                                + "webmaster@gmail.com and we'll complete the "
+                                + "process for you. Thanks for your patience.");
+            }
             
-            service.remove(service.find(id));
+            
         }
         catch(Exception e)
         {
             destination = ERROR_PATH;
             request.setAttribute("msg", e.getMessage());
-            RequestDispatcher view = request.getRequestDispatcher(response.encodeRedirectURL(destination));
-            view.forward(request, response);
         }
-        response.sendRedirect(response.encodeRedirectURL(destination));
+        
+        RequestDispatcher view = request.getRequestDispatcher(destination);
+        view.forward(request, response);
     }
 
     /**

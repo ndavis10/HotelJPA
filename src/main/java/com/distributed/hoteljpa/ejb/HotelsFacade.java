@@ -8,6 +8,7 @@ package com.distributed.hoteljpa.ejb;
 import com.distributed.hoteljpa.entity.Hotels;
 import java.util.*;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;

@@ -10,6 +10,7 @@ import com.distributed.hoteljpa.entity.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +24,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditController extends HttpServlet {
 
-    @EJB
+    @Inject
     private HotelsFacade service;
-    private static final String EDIT_PATH = "/admin/edit.jsp";
+    private static final String EDIT_PATH = "/edit.jsp";
     private static final String COMPLETE_PATH = "List";
-    private static final String ERROR_PATH = "/error.jsp";
+    private static final String ERROR_PATH = "../error.jsp";
     private static final String DAO_PARAM = "HotelDao";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

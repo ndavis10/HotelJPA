@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CreateController extends HttpServlet {
 
-    @EJB
+    @Inject
     private HotelsFacade service;
     
-    private static final String CREATE_PATH = "/member/create.html";
+    private static final String CREATE_PATH = "/create.html";
     private static final String COMPLETE_PATH = "/List";
     private static final String ERROR_PATH = "/error.jsp";
     

@@ -17,9 +17,9 @@
 
     <body>
        <div class="container">
-            <form id="signInForm" role="form" method='POST' action="<c:url value='j_spring_security_check' />">
-                <div class="col s6">
-                    <h3 style="font-weight: 200;">Sign in </h3>
+            <form class="col s6" id="signInForm" role="form" method='POST' action="<c:url value='j_spring_security_check' />">
+                <div>
+                    <h3>Sign in </h3>
                     <div class="input-field">
                         <label for="j_username">Email address</label>
                         <input tabindex="1" class="form-control" id="j_username" name="j_username" type="text" autofocus />
@@ -29,6 +29,24 @@
                         <input tabindex="2" class="form-control" id="j_password" name="j_password" type="password" />
                     </div>
                     <button class="btn waves-effect waves-light" name="submit" type="submit">Sign in</button>
+                </div>
+            </form>
+            <form class="col s6" id="registerForm" role="form" method="POST" action="Register">
+                <div>
+                    <h3>Register</h3>
+                    <div class="input-field">
+                        <label for="r_username">Email address</label>
+                        <input tabindex="4" class="form-control" id="r_username" name="r_username" type="email" value="${user.username}" />
+                    </div>
+                    <div class="input-field">
+                        <label for="r_password">Password</label>
+                        <input tabindex="5" class="form-control" id="r_password" name="r_password" type="password" />
+                    </div>
+                    <div class="input-field">
+                        <label for="r_confirm_password">Confirm Password</label>
+                        <input tabindex="6" class="form-control" id="r_confirm_password" name="r_confirm_password" type="password" />
+                    </div>
+                    <button class="btn waves-effect waves-light" name="submit" type="submit">Register</button>
                 </div>
             </form>
        </div>

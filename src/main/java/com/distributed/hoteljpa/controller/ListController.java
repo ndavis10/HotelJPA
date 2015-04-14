@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -22,7 +23,7 @@ import javax.servlet.RequestDispatcher;
  * @author viewt_000
  */
 public class ListController extends HttpServlet {
-    @EJB
+    @Inject
     private HotelsFacade service;
 
     private static final String RESULTS_PAGE = "/View/all.jsp";
