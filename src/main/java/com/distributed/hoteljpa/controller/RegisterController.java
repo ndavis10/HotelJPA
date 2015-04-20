@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.*;
 import org.springframework.mail.MailException;
 
 /**
@@ -31,11 +32,12 @@ public class RegisterController extends HttpServlet {
     @Inject
     private AuthoritiesFacade authorityService;
     
-    private final EmailVerificationSender emailService = new EmailVerificationSender();
+    private static final EmailVerificationSender emailService = new EmailVerificationSender();
     
     private static final String LOGIN_PATH = "/login.jsp";
     private static final String SUCCESS_PATH = "/registered.html";
     private static final String ERROR_PATH = "/error.jsp";
+    private static transient final Logger LOG = LoggerFactory.getLogger(EmailVerificationSender.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -104,7 +106,7 @@ public class RegisterController extends HttpServlet {
             insertUser.setPassword(password);
             insertUser.setEnabled(false);
 	       
-            List<Authorities> auths = new ArrayList<Authorities>();
+            List<Authorities> auths = new ArrayList<>();
             Authorities auth = new Authorities();
             auth.setAuthority("ROLE_MEMBER"); // or, use any role you want
             auths.add(auth);
@@ -115,6 +117,7 @@ public class RegisterController extends HttpServlet {
             
             try {
                 // you need an email service class
+                LOG.debug("Attempting to send Email!");
                 emailService.sendEmail(insertUser.getUsername(), null); 
 
             } catch (MailException ex) {

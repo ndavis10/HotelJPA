@@ -24,6 +24,10 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>com.distributed.hoteljpa.controller.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistrationVerifier</servlet-name>
+        <servlet-class>com.distributed.hoteljpa.controller.RegistrationVerifier</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListController</servlet-name>
         <url-pattern>/List</url-pattern>
@@ -67,6 +71,10 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrationVerifier</servlet-name>
+        <url-pattern>/Verify</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,10 +6,12 @@
 package com.distributed.hoteljpa.ejb;
 
 import com.distributed.hoteljpa.entity.Users;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,13 @@ public class UsersFacade extends AbstractFacade<Users> {
 
     public UsersFacade() {
         super(Users.class);
+    }
+    
+    public List<Users> findByUsername(String username)
+    {
+        Query q = this.getEntityManager().createNamedQuery("Users.findByUsername");
+        q.setParameter(1, username);
+        return q.getResultList();
     }
     
 }
